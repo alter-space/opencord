@@ -1,0 +1,36 @@
+{
+  "name": "opencord",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F backend dev",
+    "db:push": "turbo -F @opencord/db db:push",
+    "db:studio": "turbo -F @opencord/db db:studio",
+    "db:generate": "turbo -F @opencord/db db:generate",
+    "db:migrate": "turbo -F @opencord/db db:migrate",
+    "check": "oxlint && oxfmt --write"
+  },
+  "dependencies": {
+    "@opencord/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@opencord/config": "workspace:*",
+    "@types/node": "catalog:",
+    "oxfmt": "^0.26.0",
+    "oxlint": "^1.41.0",
+    "turbo": "^2.6.3",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.6.5"
+}

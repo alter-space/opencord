@@ -1,0 +1,3 @@
+{
+  "extends": "@opencord/config/tsconfig.base.json"
+}

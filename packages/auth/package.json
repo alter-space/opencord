@@ -1,0 +1,24 @@
+{
+  "name": "@opencord/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@opencord/db": "workspace:*",
+    "@opencord/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@opencord/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
