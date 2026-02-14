@@ -26,6 +26,36 @@ First, install the dependencies:
 pnpm install
 ```
 
+Start local infrastructure services:
+
+```bash
+docker compose up -d
+```
+
+Create env files:
+
+`apps/backend/.env`
+
+```bash
+BETTER_AUTH_SECRET=<generate-with-openssl-rand-base64-32>
+BETTER_AUTH_URL=http://localhost:3000
+CORS_ORIGIN=http://localhost:3001
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/mydb?schema=public
+REDIS_URL=redis://localhost:6379
+```
+
+`apps/web/.env`
+
+```bash
+VITE_SERVER_URL=http://localhost:3000
+```
+
+Generate `BETTER_AUTH_SECRET`:
+
+```bash
+openssl rand -base64 32
+```
+
 ## Database Setup
 
 This project uses PostgreSQL with Drizzle ORM.
