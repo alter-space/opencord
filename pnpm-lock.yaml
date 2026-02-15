@@ -128,6 +128,8 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
+  apps/gateway: {}
+
   apps/web:
     dependencies:
       '@ai-sdk/react':
