@@ -12,24 +12,26 @@ This project was created with a modern TypeScript stack that combines React, Tan
 - **tRPC** - End-to-end type-safe APIs
 - **Node.js** - Runtime environment
 - **Drizzle** - TypeScript-first ORM
-- **PostgreSQL** - Database engine
+- **Neon PostgreSQL** - Serverless Postgres database
+- **Upstash Redis** - Serverless Redis for caching and real-time features
 - **Authentication** - Better-Auth
 - **Oxlint** - Oxlint + Oxfmt (linting & formatting)
 - **Tauri** - Build native desktop applications
 - **Turborepo** - Optimized monorepo build system
 
+## Prerequisites
+
+You need accounts on the following services (all have generous free tiers):
+
+1. **[Neon](https://neon.tech)** - Create a project and grab the PostgreSQL connection string
+2. **[Upstash](https://upstash.com)** - Create a Redis database and grab the REST URL + token
+
 ## Getting Started
 
-First, install the dependencies:
+Install dependencies:
 
 ```bash
 pnpm install
-```
-
-Start local infrastructure services:
-
-```bash
-docker compose up -d
 ```
 
 Create env files:
@@ -40,8 +42,9 @@ Create env files:
 BETTER_AUTH_SECRET=<generate-with-openssl-rand-base64-32>
 BETTER_AUTH_URL=http://localhost:3000
 CORS_ORIGIN=http://localhost:3001
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/mydb?schema=public
-REDIS_URL=redis://localhost:6379
+DATABASE_URL=<your-neon-connection-string>
+UPSTASH_REDIS_REST_URL=<your-upstash-redis-rest-url>
+UPSTASH_REDIS_REST_TOKEN=<your-upstash-redis-rest-token>
 ```
 
 `apps/web/.env`
@@ -58,21 +61,20 @@ openssl rand -base64 32
 
 ## Database Setup
 
-This project uses PostgreSQL with Drizzle ORM.
+This project uses Neon (serverless PostgreSQL) with Drizzle ORM.
 
-1. Make sure you have a PostgreSQL database set up.
-2. Update your `apps/backend/.env` file with your PostgreSQL connection details.
-
-3. Apply the schema to your database:
+1. Create a project on [neon.tech](https://neon.tech) and copy the connection string.
+2. Set `DATABASE_URL` in `apps/backend/.env` to your Neon connection string.
+3. Push the schema to your database:
 
 ```bash
-pnpm run db:push
+pnpm db:push
 ```
 
 Then, run the development server:
 
 ```bash
-pnpm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
@@ -80,7 +82,7 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 
 ## Git Hooks and Formatting
 
-- Format and lint fix: `pnpm run check`
+- Format and lint fix: `pnpm check`
 
 ## Project Structure
 
@@ -88,24 +90,26 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 opencord/
 ├── apps/
 │   ├── web/         # Frontend application (React + TanStack Router)
-│   └── backend/     # Backend API (Hono, TRPC)
+│   └── backend/     # Backend API (Hono, tRPC)
 ├── packages/
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
+│   ├── api/         # tRPC router definitions and procedures
+│   ├── auth/        # Better Auth configuration
+│   ├── db/          # Drizzle schema, Neon connection, migrations
+│   ├── env/         # Zod-validated environment variables
+│   └── config/      # Shared TypeScript config
 ```
 
 ## Available Scripts
 
-- `pnpm run dev`: Start all applications in development mode
-- `pnpm run build`: Build all applications
-- `pnpm run dev:web`: Start only the web application
-- `pnpm run dev:server`: Start only the backend
-- `pnpm run check-types`: Check TypeScript types across all apps
-- `pnpm run db:push`: Push schema changes to database
-- `pnpm run db:generate`: Generate database client/types
-- `pnpm run db:migrate`: Run database migrations
-- `pnpm run db:studio`: Open database studio UI
-- `pnpm run check`: Run Oxlint and Oxfmt
-- `cd apps/web && pnpm run desktop:dev`: Start Tauri desktop app in development
-- `cd apps/web && pnpm run desktop:build`: Build Tauri desktop app
+- `pnpm dev` - Start all applications in development mode
+- `pnpm build` - Build all applications
+- `pnpm dev:web` - Start only the web application
+- `pnpm dev:server` - Start only the backend
+- `pnpm check-types` - Check TypeScript types across all apps
+- `pnpm db:push` - Push schema changes to database
+- `pnpm db:generate` - Generate database migrations
+- `pnpm db:migrate` - Run database migrations
+- `pnpm db:studio` - Open Drizzle Studio GUI
+- `pnpm check` - Run Oxlint and Oxfmt
+- `cd apps/web && pnpm desktop:dev` - Start Tauri desktop app in development
+- `cd apps/web && pnpm desktop:build` - Build Tauri desktop app
