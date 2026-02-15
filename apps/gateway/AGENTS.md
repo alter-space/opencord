@@ -6,6 +6,7 @@ High-performance WebSocket gateway written in Go for zero-allocation real-time c
 
 - **Language**: Go 1.26
 - **HTTP**: stdlib net/http
+- **WebSocket**: github.com/gorilla/websocket
 - **Port**: 8081
 
 ## Scripts
@@ -17,7 +18,24 @@ High-performance WebSocket gateway written in Go for zero-allocation real-time c
 
 ## Architecture
 
-Barebones HTTP server with `/health` endpoint. WebSocket handling to be implemented.
+HTTP server with:
+- `/health` — health check endpoint
+- `/ws` — WebSocket upgrade endpoint
+
+### Zero-Allocation Design
+
+Uses `sync.Pool` for byte buffer recycling to minimize GC pressure:
+- 4KB buffer pool for read/write operations
+- Pooled buffers returned immediately after use
+- Client struct holds WebSocket connection
+- Read loop recycles buffers on every message
+
+### WebSocket Upgrader
+
+Configured with:
+- 4KB read/write buffers
+- Origin check disabled for dev (allows all origins)
+- Automatic protocol upgrade from HTTP
 
 ## Development
 
@@ -28,7 +46,7 @@ pnpm -F @opencord/gateway run dev
 
 Or from this directory:
 ```bash
-go run main.go
+go run *.go
 ```
 
 ## Building

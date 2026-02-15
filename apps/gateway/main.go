@@ -23,6 +23,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/health", healthHandler)
+	http.HandleFunc("/ws", handleWebSocket)
 
 	port := ":8081"
 	fmt.Printf("gateway server starting on http://localhost%s\n", port)
