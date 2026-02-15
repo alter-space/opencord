@@ -1,0 +1,9 @@
+{
+  "name": "@opencord/gateway",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "go run *.go",
+    "build": "go build -o bin/gateway main.go"
+  }
+}
