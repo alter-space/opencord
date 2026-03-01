@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -51,6 +52,7 @@ func initRedis() {
 }
 
 func main() {
+	godotenv.Load()
 	initRedis()
 
 	http.HandleFunc("/health", healthHandler)
