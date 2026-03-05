@@ -21,6 +21,7 @@
     "@opencord/auth": "workspace:*",
     "@opencord/env": "workspace:*",
     "@paper-design/shaders-react": "^0.0.71",
+    "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/vite": "^4.0.15",
     "@tanstack/react-form": "^1.28.0",
     "@tanstack/react-query": "^5.90.12",

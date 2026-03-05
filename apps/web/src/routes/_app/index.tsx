@@ -1,18 +1,11 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_app/")({
   component: HomeComponent,
-  beforeLoad: async () => {
-    const session = await authClient.getSession();
-    if (!session.data) {
-      redirect({ to: "/login", throw: true });
-    }
-    return { session };
-  },
 });
 
 const mockServers = [
@@ -37,13 +30,13 @@ const statusColors: Record<string, string> = {
 };
 
 function HomeComponent() {
-  const { session } = Route.useRouteContext();
+  const { data: session } = authClient.useSession();
 
   return (
     <div className="container mx-auto max-w-4xl space-y-8 overflow-y-auto px-4 py-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">
-          Welcome back, {session.data?.user.name}
+          Welcome back, {session?.user.name}
         </h1>
         <p className="mt-1 text-muted-foreground">Here&apos;s what&apos;s happening</p>
       </div>
