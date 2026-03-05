@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  communities as mockServers,
+  conversations as mockFriends,
+  statusColors,
+} from "@/components/sidebar/navigation-data";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
@@ -8,37 +13,16 @@ export const Route = createFileRoute("/_app/")({
   component: HomeComponent,
 });
 
-const mockServers = [
-  { id: "1", name: "General", initials: "GN", members: 128, online: 42 },
-  { id: "2", name: "Design Team", initials: "DT", members: 24, online: 8 },
-  { id: "3", name: "Engineering", initials: "EN", members: 56, online: 19 },
-  { id: "4", name: "Music Lounge", initials: "ML", members: 312, online: 87 },
-];
-
-const mockFriends = [
-  { id: "1", name: "Alice Johnson", status: "online" as const, activity: "Playing Minecraft" },
-  { id: "2", name: "Bob Smith", status: "idle" as const, activity: "Listening to Spotify" },
-  { id: "3", name: "Charlie Davis", status: "dnd" as const, activity: "In a meeting" },
-  { id: "4", name: "Diana Chen", status: "online" as const, activity: null },
-];
-
-const statusColors: Record<string, string> = {
-  online: "bg-green-500",
-  idle: "bg-yellow-500",
-  dnd: "bg-red-500",
-  offline: "bg-gray-500",
-};
-
 function HomeComponent() {
   const { data: session } = authClient.useSession();
 
   return (
-    <div className="container mx-auto max-w-4xl space-y-8 overflow-y-auto px-4 py-8">
+    <div className="mx-auto max-w-5xl space-y-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">
           Welcome back, {session?.user.name}
         </h1>
-        <p className="mt-1 text-muted-foreground">Here&apos;s what&apos;s happening</p>
+        <p className="mt-1 text-muted-foreground">Here&apos;s what&apos;s moving right now.</p>
       </div>
 
       <section className="space-y-3">
