@@ -122,8 +122,6 @@ function FriendActions({
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant="secondary"
-        size="icon"
         className="size-9 rounded-full bg-accent/50 hover:bg-accent"
         disabled={disabled}
         onClick={() => onOpenChat(friend.userId)}
@@ -132,13 +130,11 @@ function FriendActions({
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger
-          render={
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-9 rounded-full hover:bg-accent"
-              disabled={disabled}
-            />
+            render={
+              <Button
+                className="size-9 rounded-full hover:bg-accent"
+                disabled={disabled}
+              />
           }
         >
           <Users className="size-4" />
@@ -244,7 +240,6 @@ function FriendListCard({
               {variant === "incoming" ? (
                 <>
                   <Button
-                    size="icon"
                     className="size-9 rounded-full bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30"
                     disabled={isBusy}
                     onClick={() => onAccept?.(friend.friendshipId)}
@@ -252,8 +247,6 @@ function FriendListCard({
                     <UserPlus className="size-4" />
                   </Button>
                   <Button
-                    variant="ghost"
-                    size="icon"
                     className="size-9 rounded-full hover:bg-destructive/20 hover:text-destructive"
                     disabled={isBusy}
                     onClick={() => onDecline?.(friend.friendshipId)}
@@ -264,8 +257,6 @@ function FriendListCard({
               ) : null}
               {variant === "outgoing" ? (
                 <Button
-                  variant="ghost"
-                  size="icon"
                   className="size-9 rounded-full hover:bg-destructive/20 hover:text-destructive"
                   disabled={isBusy}
                   onClick={() => onDecline?.(friend.friendshipId)}
@@ -331,7 +322,6 @@ function BlockedListCard({
             </div>
             {isBusy ? <Spinner size="sm" /> : null}
             <Button
-              variant="secondary"
               size="sm"
               className="rounded-full"
               disabled={isBusy}
@@ -390,7 +380,6 @@ function AddFriendResults({
             {isBusy ? <Spinner size="sm" /> : null}
             {result.friendship === "friends" ? (
               <Button
-                variant="secondary"
                 size="sm"
                 className="rounded-full"
                 disabled={isBusy}

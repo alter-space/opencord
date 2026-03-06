@@ -93,7 +93,6 @@ function LoginPage() {
           </div>
 
           <Button
-            variant="outline"
             className="h-11 w-full gap-3 text-sm"
             onClick={handleGoogleSignIn}
           >

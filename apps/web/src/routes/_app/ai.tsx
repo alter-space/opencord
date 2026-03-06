@@ -84,7 +84,7 @@ function RouteComponent() {
           autoComplete="off"
           autoFocus
         />
-        <Button type="submit" size="icon">
+        <Button type="submit" className="size-9">
           <Send size={18} />
         </Button>
       </form>
