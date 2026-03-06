@@ -1,9 +1,8 @@
-export const communities = [
+export const servers = [
   {
     id: "1",
     name: "General",
     initials: "GN",
-    description: "Open conversations for everyone",
     members: 128,
     online: 42,
   },
@@ -11,7 +10,6 @@ export const communities = [
     id: "2",
     name: "Design Team",
     initials: "DT",
-    description: "Reviews, critiques, and ideas",
     members: 24,
     online: 8,
   },
@@ -19,7 +17,6 @@ export const communities = [
     id: "3",
     name: "Engineering",
     initials: "EN",
-    description: "Build updates and ship notes",
     members: 56,
     online: 19,
   },
@@ -27,13 +24,12 @@ export const communities = [
     id: "4",
     name: "Music Lounge",
     initials: "ML",
-    description: "Listening sessions and recs",
     members: 312,
     online: 87,
   },
 ] as const;
 
-export const channelsByCommunity = {
+export const channelsByServer = {
   "1": [
     { id: "general", name: "general", type: "text" },
     { id: "intros", name: "introductions", type: "text" },
@@ -56,48 +52,10 @@ export const channelsByCommunity = {
   ],
 } as const;
 
-export const conversations = [
-  {
-    id: "1",
-    name: "Alice Johnson",
-    status: "online",
-    activity: "Sketching the onboarding flow",
-    group: "Pinned",
-  },
-  {
-    id: "2",
-    name: "Bob Smith",
-    status: "idle",
-    activity: "Sharing build notes",
-    group: "Recent",
-  },
-  {
-    id: "3",
-    name: "Charlie Davis",
-    status: "dnd",
-    activity: "In a voice room",
-    group: "Recent",
-  },
-  {
-    id: "4",
-    name: "Diana Chen",
-    status: "offline",
-    activity: "Last active 2h ago",
-    group: "Friends",
-  },
-] as const;
-
-export const statusColors = {
-  online: "bg-green-500",
-  idle: "bg-amber-500",
-  dnd: "bg-rose-500",
-  offline: "bg-zinc-500",
-} as const;
-
-export function getCommunityById(communityId: string | null) {
-  if (!communityId) {
+export function getServerById(serverId: string | null) {
+  if (!serverId) {
     return null;
   }
 
-  return communities.find((community) => community.id === communityId) ?? null;
+  return servers.find((server) => server.id === serverId) ?? null;
 }

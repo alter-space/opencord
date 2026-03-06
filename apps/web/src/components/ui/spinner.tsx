@@ -4,33 +4,18 @@ import { cn } from "@/lib/utils";
 type SizeVariant = "sm" | "default" | "md" | "lg";
 type SpeedVariant = "slow" | "normal" | "fast";
 
-const SpinnerPrimitive = React.forwardRef<
-  React.ElementRef<"svg">,
-  React.SVGProps<SVGSVGElement>
->(
+const SpinnerPrimitive = React.forwardRef<React.ElementRef<"svg">, React.SVGProps<SVGSVGElement>>(
   ({ ...props }, ref) => {
     const id = React.useId();
 
     return (
       <svg ref={ref} data-slot-icon viewBox="0 0 24 24" aria-hidden="true" {...props}>
         <defs>
-          <linearGradient
-            id={`gradient-1-${id}`}
-            x1="50%"
-            x2="50%"
-            y1="5.271%"
-            y2="91.793%"
-          >
+          <linearGradient id={`gradient-1-${id}`} x1="50%" x2="50%" y1="5.271%" y2="91.793%">
             <stop offset="0%" stopColor="currentColor" />
             <stop offset="100%" stopColor="currentColor" stopOpacity={0.55} />
           </linearGradient>
-          <linearGradient
-            id={`gradient-2-${id}`}
-            x1="50%"
-            x2="50%"
-            y1="15.24%"
-            y2="87.15%"
-          >
+          <linearGradient id={`gradient-2-${id}`} x1="50%" x2="50%" y1="15.24%" y2="87.15%">
             <stop offset="0%" stopColor="currentColor" stopOpacity={0} />
             <stop offset="100%" stopColor="currentColor" stopOpacity={0.55} />
           </linearGradient>
@@ -67,27 +52,18 @@ const speedClasses: Record<SpeedVariant, string> = {
   fast: "animate-[spin_0.5s_linear_infinite]",
 };
 
-interface SpinnerProps
-  extends Omit<React.ComponentPropsWithoutRef<"svg">, "display" | "opacity"> {
+interface SpinnerProps extends Omit<React.ComponentPropsWithoutRef<"svg">, "display" | "opacity"> {
   size?: SizeVariant;
   speed?: SpeedVariant;
   className?: string;
 }
 
-export const Spinner = React.forwardRef<
-  React.ComponentRef<typeof SpinnerPrimitive>,
-  SpinnerProps
->(
+export const Spinner = React.forwardRef<React.ComponentRef<typeof SpinnerPrimitive>, SpinnerProps>(
   ({ className, size = "md", speed = "normal", ...props }, ref) => {
     return (
       <span
         data-spinner
-        className={cn(
-          "inline-block",
-          speedClasses[speed],
-          sizeClasses[size],
-          className,
-        )}
+        className={cn("inline-block", speedClasses[speed], sizeClasses[size], className)}
       >
         <SpinnerPrimitive
           ref={ref}

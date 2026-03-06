@@ -1,18 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
-import {
-  Bell,
-  Globe2,
-  Hash,
-  Home,
-  LogOut,
-  MessageSquare,
-  Search,
-  Users2,
-  Volume2,
-} from "lucide-react";
+import { Globe2, Hash, LogOut, Volume2 } from "lucide-react";
 
 import { ModeToggle } from "@/components/mode-toggle";
+import { Facehash } from "facehash";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,26 +13,154 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/utils/trpc";
 
-import {
-  channelsByCommunity,
-  communities,
-  conversations,
-  getCommunityById,
-  statusColors,
-} from "./navigation-data";
-import { SidebarNav } from "./sidebar-nav";
+import { channelsByServer, getServerById, servers } from "./navigation-data";
+import { SidebarArea, SidebarNav } from "./sidebar-nav";
 
 function railCls(active: boolean) {
   return cn(
-    "relative flex size-11 items-center justify-center rounded-2xl transition-colors duration-150",
+    "relative flex size-11 items-center justify-center rounded-[40%] transition-all duration-200",
     "outline-none focus-visible:ring-2 focus-visible:ring-ring",
     active
       ? "bg-foreground text-background shadow-sm"
-      : "text-muted-foreground hover:bg-card hover:text-foreground",
+      : "text-muted-foreground hover:bg-accent hover:text-foreground",
+  );
+}
+
+function serverCls(active: boolean) {
+  return cn(
+    "flex size-11 items-center justify-center rounded-[40%] border text-xs font-semibold transition-all duration-200",
+    "outline-none focus-visible:ring-2 focus-visible:ring-ring",
+    active
+      ? "border-transparent bg-foreground text-background shadow-sm"
+      : "border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground",
+  );
+}
+
+function HomePanel() {
+  const location = useLocation();
+  const conversationsQuery = useQuery(trpc.conversations.list.queryOptions());
+
+  return (
+    <div className="flex h-full min-w-0 flex-col border-l border-border bg-card/30">
+      <div className="border-b border-border px-4 py-4">
+        <div className="text-sm font-semibold text-foreground">Home</div>
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
+        <Link
+          to="/"
+          className={cn(
+            "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+            location.pathname === "/"
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+          )}
+        >
+          <Globe2 className="size-4" />
+          <span>Friends</span>
+        </Link>
+
+        <div className="mt-6 mb-2 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Direct Messages
+        </div>
+
+        <div className="space-y-[2px]">
+          {conversationsQuery.isLoading ? (
+            <div className="px-3 py-2 text-xs text-muted-foreground">Loading...</div>
+          ) : (
+            (conversationsQuery.data ?? []).map((conversation) => (
+              <Link
+                key={conversation?.conversationId}
+                to="/"
+                search={{ conversationId: conversation?.conversationId } as never}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-3 py-2 transition-colors",
+                  location.search?.conversationId === conversation?.conversationId
+                    ? "bg-accent text-foreground"
+                    : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+                )}
+              >
+                <div className="relative shrink-0 flex items-center justify-center">
+                  <Facehash
+                    name={conversation?.username ?? "user"}
+                    size={28}
+                    className="rounded-[40%]"
+                  />
+                  {conversation?.presence === "online" && (
+                    <span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-background bg-emerald-500" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1 truncate text-sm">
+                  {conversation?.displayName || conversation?.username}
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ServerPanel({ serverId }: { serverId: string }) {
+  const server = getServerById(serverId) ?? servers[0];
+  const channels = channelsByServer[server.id] ?? [];
+  const textChannels = channels.filter((channel) => channel.type === "text");
+  const voiceChannels = channels.filter((channel) => channel.type === "voice");
+
+  return (
+    <div className="flex h-full min-w-0 flex-col">
+      <div className="border-b border-border px-4 py-4">
+        <div className="flex items-baseline justify-between gap-3">
+          <div className="truncate text-sm font-semibold text-foreground">{server.name}</div>
+          <div className="shrink-0 text-[11px] text-muted-foreground">{server.online} online</div>
+        </div>
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
+        <div className="space-y-5">
+          <section>
+            <div className="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+              Text rooms
+            </div>
+            <div className="space-y-1">
+              {textChannels.map((channel) => (
+                <button
+                  key={channel.id}
+                  type="button"
+                  className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <Hash className="size-4 shrink-0" />
+                  <span className="truncate">{channel.name}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <div className="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+              Voice rooms
+            </div>
+            <div className="space-y-1">
+              {voiceChannels.map((channel) => (
+                <button
+                  key={channel.id}
+                  type="button"
+                  className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <Volume2 className="size-4 shrink-0" />
+                  <span className="truncate">{channel.name}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -50,78 +170,60 @@ export function AppSidebar() {
   const { data: session } = authClient.useSession();
 
   const { currentArea, serverId } = useMemo(() => {
-    if (location.pathname.startsWith("/dms")) {
-      return { currentArea: "dms" as const, serverId: null };
-    }
-
     const match = location.pathname.match(/^\/servers\/([^/]+)/);
     if (match) {
       return { currentArea: "server" as const, serverId: match[1] };
     }
 
-    return { currentArea: null as null, serverId: null };
+    return { currentArea: "home" as const, serverId: null };
   }, [location.pathname]);
 
-  const currentCommunity = getCommunityById(serverId);
-  const currentChannels = currentCommunity
-    ? channelsByCommunity[currentCommunity.id] ?? []
-    : [];
-  const textChannels = currentChannels.filter((channel) => channel.type === "text");
-  const voiceChannels = currentChannels.filter((channel) => channel.type === "voice");
-  const groupedConversations = {
-    Pinned: conversations.filter((conversation) => conversation.group === "Pinned"),
-    Recent: conversations.filter((conversation) => conversation.group === "Recent"),
-    Friends: conversations.filter((conversation) => conversation.group === "Friends"),
-  };
-  const communityLinkParams = { serverId: currentCommunity?.id ?? communities[0].id };
+  const activeServer = getServerById(serverId) ?? servers[0];
 
   return (
     <SidebarNav
+      currentArea={currentArea}
       rail={
-        <div className="flex h-full flex-col items-center justify-between py-4">
-          <div className="flex flex-col items-center gap-2">
+        <div className="flex h-full flex-col items-center justify-between">
+          <div className="flex flex-col items-center gap-2 p-2">
             <Link
               to="/"
-              className="mb-2 flex size-11 items-center justify-center rounded-2xl border border-border/60 bg-card text-sm font-bold text-foreground"
+              className={cn(
+                "mb-1 flex size-11 items-center justify-center rounded-2xl border border-border bg-card text-sm font-bold text-foreground",
+                railCls(currentArea === "home"),
+              )}
             >
-              <Globe2 />
+              <Globe2 className="size-5" />
             </Link>
 
-            <Link to="/" className={railCls(currentArea === null)} title="Home">
-              <Home className="size-5" />
-            </Link>
+            <div className="my-1 h-px w-7 bg-border" />
 
-            <Link
-              to="/dms"
-              className={railCls(currentArea === "dms")}
-              title="Direct Messages"
-            >
-              <MessageSquare className="size-5" />
-            </Link>
-
-            <Link
-              to="/servers/$serverId"
-              params={communityLinkParams}
-              className={railCls(currentArea === "server")}
-              title="Communities"
-            >
-              <Users2 className="size-5" />
-            </Link>
+            <div className="flex max-h-[calc(100dvh-15rem)] flex-col items-center gap-2 overflow-y-auto px-0.5 pb-1">
+              {servers.map((server) => (
+                <Link
+                  key={server.id}
+                  to="/servers/$serverId"
+                  params={{ serverId: server.id }}
+                  className={serverCls(server.id === activeServer.id && currentArea === "server")}
+                  title={server.name}
+                >
+                  {server.initials}
+                </Link>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 p-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <ModeToggle />
 
             <DropdownMenu>
-              <DropdownMenuTrigger className="cursor-pointer outline-none">
-                <div className="flex size-9 items-center justify-center rounded-full bg-primary/20 text-xs font-medium text-primary">
+              <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none">
+                <div className="flex size-9 items-center justify-center rounded-full bg-primary/15 text-xs font-medium text-primary">
                   {session?.user.name?.[0]?.toUpperCase() ?? "U"}
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="right" align="end">
-                <DropdownMenuLabel>
-                  {session?.user.name ?? "User"}
-                </DropdownMenuLabel>
+                <DropdownMenuLabel>{session?.user.name ?? "User"}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
@@ -141,232 +243,25 @@ export function AppSidebar() {
         </div>
       }
       panel={
-        <div className="flex h-full min-w-0 flex-col">
-          <div className="border-b border-border/60 px-4 py-4">
-            <div className="mb-3">
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-                {currentArea === "server"
-                  ? "Communities"
-                  : currentArea === "dms"
-                    ? "Messages"
-                    : "Workspace"}
-              </p>
-              <h2 className="mt-1 text-lg font-semibold text-foreground">
-                {currentArea === "server"
-                  ? currentCommunity?.name ?? "Communities"
-                  : currentArea === "dms"
-                    ? "Direct Messages"
-                    : "Home"}
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {currentArea === "server"
-                  ? currentCommunity?.description ?? "Jump between communities and channels"
-                  : currentArea === "dms"
-                    ? "Friends, groups, and recent conversations"
-                    : "Your conversations and spaces in one place"}
-              </p>
-            </div>
+        <>
+          <SidebarArea visible={currentArea === "home"} direction="left">
+            <HomePanel />
+          </SidebarArea>
 
-            <div className="relative">
-              <Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                aria-label="Search navigation"
-                placeholder={currentArea === "server" ? "Search channels" : "Search conversations"}
-                className="rounded-xl border-border/60 bg-background pl-8"
-              />
-            </div>
-          </div>
-
-          <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
-            {currentArea === null && (
-              <div className="space-y-5">
-                <section>
-                  <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Jump back in
-                  </div>
-                  <div className="space-y-1">
-                    <Link
-                      to="/dms"
-                      className="flex items-center gap-3 rounded-2xl px-3 py-3 transition-colors hover:bg-accent"
-                    >
-                      <div className="flex size-10 items-center justify-center rounded-2xl bg-background text-foreground">
-                        <MessageSquare className="size-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-medium text-foreground">Messages</div>
-                        <div className="truncate text-xs text-muted-foreground">
-                          Pick up where your last chat left off
-                        </div>
-                      </div>
-                    </Link>
-
-                    <Link
-                      to="/servers/$serverId"
-                      params={{ serverId: communities[0].id }}
-                      className="flex items-center gap-3 rounded-2xl px-3 py-3 transition-colors hover:bg-accent"
-                    >
-                      <div className="flex size-10 items-center justify-center rounded-2xl bg-background text-foreground">
-                        <Users2 className="size-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-medium text-foreground">Communities</div>
-                        <div className="truncate text-xs text-muted-foreground">
-                          Browse your channels and voice rooms
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                </section>
-
-                <section>
-                  <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Active now
-                  </div>
-                  <div className="space-y-1">
-                    {conversations.slice(0, 3).map((conversation) => (
-                      <Link
-                        key={conversation.id}
-                        to="/dms"
-                        className="flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-accent"
-                      >
-                        <div className="relative">
-                          <div className="flex size-9 items-center justify-center rounded-full bg-background text-sm font-medium text-foreground">
-                            {conversation.name[0]}
-                          </div>
-                          <div
-                            className={cn(
-                              "absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full border-2 border-card",
-                              statusColors[conversation.status],
-                            )}
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="truncate text-sm text-foreground">{conversation.name}</div>
-                          <div className="truncate text-xs text-muted-foreground">
-                            {conversation.activity}
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </section>
+          {servers.map((server) => (
+            <SidebarArea
+              key={server.id}
+              visible={currentArea === "server" && activeServer.id === server.id}
+              direction="left"
+              motion="inset"
+              blur
+            >
+              <div className="flex h-full min-w-0 flex-col border-l border-border">
+                <ServerPanel serverId={server.id} />
               </div>
-            )}
-
-            {currentArea === "dms" && (
-              <div className="space-y-5">
-                {Object.entries(groupedConversations).map(([group, items]) => (
-                  <section key={group}>
-                    <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                      {group}
-                    </div>
-                    <div className="space-y-1">
-                      {items.map((conversation) => (
-                        <Link
-                          key={conversation.id}
-                          to="/dms"
-                          className="flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-accent"
-                        >
-                          <div className="relative">
-                            <div className="flex size-9 items-center justify-center rounded-full bg-background text-sm font-medium text-foreground">
-                              {conversation.name[0]}
-                            </div>
-                            <div
-                              className={cn(
-                                "absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full border-2 border-card",
-                                statusColors[conversation.status],
-                              )}
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="truncate text-sm font-medium text-foreground">
-                              {conversation.name}
-                            </div>
-                            <div className="truncate text-xs text-muted-foreground">
-                              {conversation.activity}
-                            </div>
-                          </div>
-                          {group === "Pinned" && (
-                            <Bell className="ml-auto size-3.5 text-muted-foreground" />
-                          )}
-                        </Link>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            )}
-
-            {currentArea === "server" && currentCommunity && (
-              <div className="space-y-5">
-                <section>
-                  <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Your communities
-                  </div>
-                  <div className="space-y-1">
-                    {communities.map((community) => (
-                      <Link
-                        key={community.id}
-                        to="/servers/$serverId"
-                        params={{ serverId: community.id }}
-                        className={cn(
-                          "flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-accent",
-                          community.id === currentCommunity.id && "bg-background",
-                        )}
-                      >
-                        <div className="flex size-10 items-center justify-center rounded-2xl bg-background text-xs font-semibold text-foreground">
-                          {community.initials}
-                        </div>
-                        <div className="min-w-0">
-                          <div className="truncate text-sm font-medium text-foreground">
-                            {community.name}
-                          </div>
-                          <div className="truncate text-xs text-muted-foreground">
-                            {community.online} online
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-
-                <section>
-                  <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Text rooms
-                  </div>
-                  <div className="space-y-1">
-                    {textChannels.map((channel) => (
-                      <div
-                        key={channel.id}
-                        className="flex cursor-pointer items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                      >
-                        <Hash className="size-4 shrink-0" />
-                        <span className="truncate">{channel.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-
-                <section>
-                  <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Voice rooms
-                  </div>
-                  <div className="space-y-1">
-                    {voiceChannels.map((channel) => (
-                      <div
-                        key={channel.id}
-                        className="flex cursor-pointer items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                      >
-                        <Volume2 className="size-4 shrink-0" />
-                        <span className="truncate">{channel.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              </div>
-            )}
-          </div>
-        </div>
+            </SidebarArea>
+          ))}
+        </>
       }
     />
   );

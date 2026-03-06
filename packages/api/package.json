@@ -18,6 +18,7 @@
     "@trpc/server": "catalog:",
     "@upstash/redis": "^1.36.2",
     "dotenv": "catalog:",
+    "drizzle-orm": "^0.45.1",
     "zod": "catalog:"
   },
   "devDependencies": {

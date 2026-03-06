@@ -78,6 +78,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.14.4
         version: 1.19.9(hono@4.11.9)
+      '@hono/node-ws':
+        specifier: ^1.3.0
+        version: 1.3.0(@hono/node-server@1.19.9(hono@4.11.9))(hono@4.11.9)
       '@hono/trpc-server':
         specifier: ^0.4.0
         version: 0.4.2(@trpc/server@11.10.0(typescript@5.9.3))(hono@4.11.9)
@@ -96,12 +99,15 @@ importers:
       '@trpc/server':
         specifier: 'catalog:'
         version: 11.10.0(typescript@5.9.3)
+      '@upstash/redis':
+        specifier: ^1.36.2
+        version: 1.36.2
       ai:
         specifier: 'catalog:'
         version: 6.0.85(zod@4.3.6)
       better-auth:
         specifier: 'catalog:'
-        version: 1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.11)
       dotenv:
         specifier: 'catalog:'
         version: 17.3.1
@@ -180,7 +186,7 @@ importers:
         version: 6.0.85(zod@4.3.6)
       better-auth:
         specifier: 'catalog:'
-        version: 1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.11)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -190,6 +196,9 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 17.3.1
+      facehash:
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       lucide-react:
         specifier: ^0.473.0
         version: 0.473.0(react@19.2.3)
@@ -251,6 +260,9 @@ importers:
       postcss:
         specifier: ^8.5.3
         version: 8.5.6
+      react-grab:
+        specifier: ^0.1.25
+        version: 0.1.25(@types/react@19.2.7)(react@19.2.3)
       tailwindcss:
         specifier: ^4.0.15
         version: 4.1.18
@@ -284,6 +296,9 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 17.3.1
+      drizzle-orm:
+        specifier: ^0.45.1
+        version: 0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)
       zod:
         specifier: 'catalog:'
         version: 4.3.6
@@ -308,7 +323,7 @@ importers:
         version: link:../env
       better-auth:
         specifier: 'catalog:'
-        version: 1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.11)
       dotenv:
         specifier: 'catalog:'
         version: 17.3.1
@@ -415,6 +430,10 @@ packages:
 
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
+
+  '@antfu/ni@0.23.2':
+    resolution: {integrity: sha512-FSEVWXvwroExDXUu8qV6Wqp2X3D1nJ0Li4LFymCyvCVrm7I3lNfG0zZWSWvGU1RE7891eTnFTyh31L3igOwNKQ==}
+    hasBin: true
 
   '@antfu/ni@25.0.0':
     resolution: {integrity: sha512-9q/yCljni37pkMr4sPrI3G4jqdIk074+iukc5aFJl7kmDCCsiJrbZ6zKxnES1Gwg+i9RcDZwvktl23puGslmvA==}
@@ -1120,6 +1139,13 @@ packages:
     peerDependencies:
       hono: ^4
 
+  '@hono/node-ws@1.3.0':
+    resolution: {integrity: sha512-ju25YbbvLuXdqBCmLZLqnNYu1nbHIQjoyUqA8ApZOeL1k4skuiTcw5SW77/5SUYo2Xi2NVBJoVlfQurnKEp03Q==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      '@hono/node-server': ^1.19.2
+      hono: ^4.6.0
+
   '@hono/trpc-server@0.4.2':
     resolution: {integrity: sha512-3TDrc42CZLgcTFkXQba+y7JlRWRiyw1AqhLqztWyNS2IFT+3bHld0lxKdGBttCtGKHYx0505dM67RMazjhdZqw==}
     engines: {node: '>=16.0.0'}
@@ -1192,6 +1218,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@medv/finder@4.0.2':
+    resolution: {integrity: sha512-RraNY9SCcx4KZV0Dh6BEW6XEW2swkqYca74pkFFRw6hHItSHiy+O/xMnpbofjYbzXj0tSpBGthUF1hHTsr3vIQ==}
 
   '@mermaid-js/parser@0.6.3':
     resolution: {integrity: sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA==}
@@ -1454,6 +1483,10 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  '@react-grab/cli@0.1.25':
+    resolution: {integrity: sha512-woSEB4/au2fiB3oEDvMk761XCcSnYVXj/t7iqgmxaFU3hC5iOzr4nHVe8Beu06FnySWB+dZdgEvUZwYI1aJP0g==}
+    hasBin: true
 
   '@rolldown/binding-android-arm64@1.0.0-beta.52':
     resolution: {integrity: sha512-MBGIgysimZPqTDcLXI+i9VveijkP5C3EAncEogXhqfax6YXj1Tr2LY3DVuEOMIjWfMPMhtQSPup4fSTAmgjqIw==}
@@ -2246,6 +2279,11 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
+  '@types/react-reconciler@0.28.9':
+    resolution: {integrity: sha512-HHM3nxyUZ3zAylX8ZEyrDNd2XZOnQ0D5XfunJF5FLQnZbHHYq4UWvW1QfelQNXv1ICNkwYhfxjwfnqivYB6bFg==}
+    peerDependencies:
+      '@types/react': '*'
+
   '@types/react@19.2.7':
     resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
 
@@ -2428,6 +2466,11 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
+
+  bippy@0.5.30:
+    resolution: {integrity: sha512-8CFmJAHD3gmTLDOCDHuWhjm1nxHSFZdlGoWtak9r53Uxn36ynOjxBLyxXHh/7h/XiKLyPvfdXa0gXWcD9o9lLQ==}
+    peerDependencies:
+      react: '>=17.0.1'
 
   birpc@4.0.0:
     resolution: {integrity: sha512-LShSxJP0KTmd101b6DRyGBj57LZxSDYWKitQNW/mi8GRMvZb078Uf9+pveax1DrVL89vm7mWe+TovdI/UDOuPw==}
@@ -3089,6 +3132,19 @@ packages:
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
+  facehash@0.1.0:
+    resolution: {integrity: sha512-tv/QVZjLvEXHssqBaJECq+kRLFwwhd017PKk8ucT7aLingL2OZ5zEqKwPMHmT9+YQO92MVFWGZQP6vxV+P5vrQ==}
+    peerDependencies:
+      '@types/react': ''
+      next: '>=15'
+      react: '>=18 <20'
+      react-dom: '>=18 <20'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      next:
+        optional: true
+
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
@@ -3313,6 +3369,10 @@ packages:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
+  ignore@7.0.5:
+    resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
+    engines: {node: '>= 4'}
+
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
@@ -3479,6 +3539,9 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  jsonc-parser@3.3.1:
+    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
@@ -4114,6 +4177,15 @@ packages:
     peerDependencies:
       react: ^19.2.3
 
+  react-grab@0.1.25:
+    resolution: {integrity: sha512-BANKjnxNFopwsDzoD53lEDYa54v3paF7ZZPuypoX6ujQl3FuYVd070IyvdWynVSDDDzlQ46udug8v1Z8vnj/EA==}
+    hasBin: true
+    peerDependencies:
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+
   react-hook-form@7.71.1:
     resolution: {integrity: sha512-9SUJKCGKo8HUSsCO+y0CtqkqI5nNuaDqTxyqPsZPqIwudpj4rCrAz/jZV+jn57bx5gtZKOh3neQu94DXMc+w5w==}
     engines: {node: '>=18.0.0'}
@@ -4364,6 +4436,13 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
+  smol-toml@1.6.0:
+    resolution: {integrity: sha512-4zemZi0HvTnYwLfrpk/CF9LOd9Lt87kAt50GnqhMpyF9U3poDAP2+iukq2bZsO/ufegbYehBkqINbsWxj4l4cw==}
+    engines: {node: '>= 18'}
+
+  solid-js@1.9.11:
+    resolution: {integrity: sha512-WEJtcc5mkh/BnHA6Yrg4whlF8g6QwpmXXRg4P2ztPmcKeHHlH4+djYecBLhSpecZY2RRECXYUwIc/C2r3yzQ4Q==}
 
   sonner@2.0.7:
     resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
@@ -4807,6 +4886,18 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+  ws@8.19.0:
+    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   wsl-utils@0.3.1:
     resolution: {integrity: sha512-g/eziiSUNBSsdDJtCLB8bdYEUMj4jR7AGeUo96p/3dTafgjHhpF4RiCFPiRILwjQoDXx5MqkBr4fwWtR3Ky4Wg==}
     engines: {node: '>=20'}
@@ -4902,6 +4993,8 @@ snapshots:
     dependencies:
       package-manager-detector: 1.6.0
       tinyexec: 1.0.2
+
+  '@antfu/ni@0.23.2': {}
 
   '@antfu/ni@25.0.0':
     dependencies:
@@ -5459,6 +5552,15 @@ snapshots:
     dependencies:
       hono: 4.11.9
 
+  '@hono/node-ws@1.3.0(@hono/node-server@1.19.9(hono@4.11.9))(hono@4.11.9)':
+    dependencies:
+      '@hono/node-server': 1.19.9(hono@4.11.9)
+      hono: 4.11.9
+      ws: 8.19.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@hono/trpc-server@0.4.2(@trpc/server@11.10.0(typescript@5.9.3))(hono@4.11.9)':
     dependencies:
       '@trpc/server': 11.10.0(typescript@5.9.3)
@@ -5525,6 +5627,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@medv/finder@4.0.2': {}
 
   '@mermaid-js/parser@0.6.3':
     dependencies:
@@ -5718,6 +5822,17 @@ snapshots:
       react: 19.2.3
     optionalDependencies:
       '@types/react': 19.2.7
+
+  '@react-grab/cli@0.1.25':
+    dependencies:
+      '@antfu/ni': 0.23.2
+      commander: 14.0.3
+      ignore: 7.0.5
+      jsonc-parser: 3.3.1
+      ora: 8.2.0
+      picocolors: 1.1.1
+      prompts: 2.4.2
+      smol-toml: 1.6.0
 
   '@rolldown/binding-android-arm64@1.0.0-beta.52':
     optional: true
@@ -6387,6 +6502,10 @@ snapshots:
     dependencies:
       '@types/react': 19.2.7
 
+  '@types/react-reconciler@0.28.9(@types/react@19.2.7)':
+    dependencies:
+      '@types/react': 19.2.7
+
   '@types/react@19.2.7':
     dependencies:
       csstype: 3.2.3
@@ -6493,7 +6612,7 @@ snapshots:
 
   baseline-browser-mapping@2.9.19: {}
 
-  better-auth@1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  better-auth@1.4.18(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.11):
     dependencies:
       '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.11)(nanostores@1.1.0)
       '@better-auth/telemetry': 1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.11)(nanostores@1.1.0))
@@ -6512,6 +6631,7 @@ snapshots:
       drizzle-orm: 0.45.1(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+      solid-js: 1.9.11
 
   better-call@1.1.8(zod@4.3.6):
     dependencies:
@@ -6523,6 +6643,13 @@ snapshots:
       zod: 4.3.6
 
   binary-extensions@2.3.0: {}
+
+  bippy@0.5.30(@types/react@19.2.7)(react@19.2.3):
+    dependencies:
+      '@types/react-reconciler': 0.28.9(@types/react@19.2.7)
+      react: 19.2.3
+    transitivePeerDependencies:
+      - '@types/react'
 
   birpc@4.0.0: {}
 
@@ -7181,6 +7308,13 @@ snapshots:
 
   extend@3.0.2: {}
 
+  facehash@0.1.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.7
+
   fast-deep-equal@3.1.3: {}
 
   fast-glob@3.3.3:
@@ -7474,6 +7608,8 @@ snapshots:
 
   ignore@5.3.2: {}
 
+  ignore@7.0.5: {}
+
   import-fresh@3.3.1:
     dependencies:
       parent-module: 1.0.1
@@ -7581,6 +7717,8 @@ snapshots:
   json-schema@0.4.0: {}
 
   json5@2.2.3: {}
+
+  jsonc-parser@3.3.1: {}
 
   jsonfile@6.2.0:
     dependencies:
@@ -8445,6 +8583,17 @@ snapshots:
       react: 19.2.3
       scheduler: 0.27.0
 
+  react-grab@0.1.25(@types/react@19.2.7)(react@19.2.3):
+    dependencies:
+      '@medv/finder': 4.0.2
+      '@react-grab/cli': 0.1.25
+      bippy: 0.5.30(@types/react@19.2.7)(react@19.2.3)
+      solid-js: 1.9.11
+    optionalDependencies:
+      react: 19.2.3
+    transitivePeerDependencies:
+      - '@types/react'
+
   react-hook-form@7.71.1(react@19.2.3):
     dependencies:
       react: 19.2.3
@@ -8839,6 +8988,14 @@ snapshots:
   signal-exit@4.1.0: {}
 
   sisteransi@1.0.5: {}
+
+  smol-toml@1.6.0: {}
+
+  solid-js@1.9.11:
+    dependencies:
+      csstype: 3.2.3
+      seroval: 1.5.0
+      seroval-plugins: 1.5.0(seroval@1.5.0)
 
   sonner@2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
@@ -9250,6 +9407,8 @@ snapshots:
       strip-ansi: 6.0.1
 
   wrappy@1.0.2: {}
+
+  ws@8.19.0: {}
 
   wsl-utils@0.3.1:
     dependencies:

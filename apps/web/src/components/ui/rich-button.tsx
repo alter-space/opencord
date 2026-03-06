@@ -29,8 +29,7 @@ type Color =
 
 type SizeVariant = "sm" | "default" | "lg";
 
-interface RichButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface RichButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   color?: Color;
   size?: SizeVariant;
@@ -39,8 +38,7 @@ interface RichButtonProps
 }
 
 const colorMap: Record<Color, string> = {
-  default:
-    "from-zinc-900/85 to-zinc-900 dark:from-zinc-100/85 dark:to-zinc-100",
+  default: "from-zinc-900/85 to-zinc-900 dark:from-zinc-100/85 dark:to-zinc-100",
   emerald: "from-emerald-600/85 to-emerald-600 dark:from-emerald-600/75",
   blue: "from-blue-600/85 to-blue-600 dark:from-blue-600/75",
   purple: "from-purple-600/85 to-purple-600 dark:from-purple-600/75",
@@ -66,8 +64,7 @@ const colorMap: Record<Color, string> = {
 };
 
 const textShadowMap: Record<Color, string> = {
-  default:
-    "[text-shadow:0_1px_0_rgb(0,0,0)] dark:[text-shadow:0_1px_0_rgb(255,255,255)]",
+  default: "[text-shadow:0_1px_0_rgb(0,0,0)] dark:[text-shadow:0_1px_0_rgb(255,255,255)]",
   emerald: "[text-shadow:0_1px_0_var(--color-emerald-800)]",
   blue: "[text-shadow:0_1px_0_var(--color-blue-800)]",
   purple: "[text-shadow:0_1px_0_var(--color-purple-800)]",
@@ -100,23 +97,14 @@ const sizeMap: Record<SizeVariant, string> = {
 
 const RichButton = React.forwardRef<HTMLButtonElement, RichButtonProps>(
   (
-    {
-      children,
-      color = "default",
-      size = "default",
-      className,
-      asChild = false,
-      ...props
-    },
+    { children, color = "default", size = "default", className, asChild = false, ...props },
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
     const colorClasses = colorMap[color];
     const textShadowClasses = textShadowMap[color];
     const sizeClasses = sizeMap[size];
-    const textColor = color === "default"
-      ? "text-white dark:text-zinc-900"
-      : "text-white";
+    const textColor = color === "default" ? "text-white dark:text-zinc-900" : "text-white";
 
     return (
       <Comp
@@ -130,24 +118,15 @@ const RichButton = React.forwardRef<HTMLButtonElement, RichButtonProps>(
         )}
         {...props}
       >
-        {asChild
-          ? children
-          : typeof children === "string"
-          ? (
-            <span className={cn("relative", textShadowClasses)}>
-              {children}
-            </span>
-          )
-          : (
-            <div
-              className={cn(
-                "relative flex items-center gap-2",
-                textShadowClasses,
-              )}
-            >
-              {children}
-            </div>
-          )}
+        {asChild ? (
+          children
+        ) : typeof children === "string" ? (
+          <span className={cn("relative", textShadowClasses)}>{children}</span>
+        ) : (
+          <div className={cn("relative flex items-center gap-2", textShadowClasses)}>
+            {children}
+          </div>
+        )}
       </Comp>
     );
   },

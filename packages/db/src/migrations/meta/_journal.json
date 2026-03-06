@@ -8,6 +8,13 @@
       "when": 1771185955060,
       "tag": "0000_goofy_sabretooth",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772794976511,
+      "tag": "0001_bumpy_night_nurse",
+      "breakpoints": true
     }
   ]
 }

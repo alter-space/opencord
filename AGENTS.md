@@ -15,18 +15,18 @@ Opencord is a real-time communication platform built as a TypeScript monorepo.
 
 ## Commands
 
-| Task | Command |
-|------|---------|
-| Dev (all) | `pnpm dev` |
-| Dev (web only) | `pnpm dev:web` |
-| Dev (backend only) | `pnpm dev:server` |
-| Build | `pnpm build` |
-| Type check | `pnpm check-types` |
-| Lint + format | `pnpm check` |
-| DB push schema | `pnpm db:push` |
+| Task                   | Command            |
+| ---------------------- | ------------------ |
+| Dev (all)              | `pnpm dev`         |
+| Dev (web only)         | `pnpm dev:web`     |
+| Dev (backend only)     | `pnpm dev:server`  |
+| Build                  | `pnpm build`       |
+| Type check             | `pnpm check-types` |
+| Lint + format          | `pnpm check`       |
+| DB push schema         | `pnpm db:push`     |
 | DB generate migrations | `pnpm db:generate` |
-| DB run migrations | `pnpm db:migrate` |
-| DB studio | `pnpm db:studio` |
+| DB run migrations      | `pnpm db:migrate`  |
+| DB studio              | `pnpm db:studio`   |
 
 ## Installing Dependencies
 
@@ -73,6 +73,7 @@ db → @opencord/env
 ## Package-Level Guidance
 
 See each package's `AGENTS.md` for specific conventions:
+
 - `apps/web/AGENTS.md` — frontend patterns
 - `apps/backend/AGENTS.md` — server patterns
 - `packages/api/AGENTS.md` — tRPC conventions

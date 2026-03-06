@@ -18,6 +18,7 @@ tRPC v11 router layer. All API procedures and business logic live here.
 ## WebSocket Authentication
 
 The `ws.getTicket` procedure generates single-use tickets for WebSocket auth:
+
 - Protected procedure (requires auth)
 - Generates UUID ticket
 - Stores `ws_ticket:<ticket>` → `userId` in Redis with 30s TTL

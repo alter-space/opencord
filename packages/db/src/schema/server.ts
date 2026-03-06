@@ -1,19 +1,8 @@
-import {
-  index,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  unique,
-} from "drizzle-orm/pg-core";
+import { index, pgEnum, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
 
 import { user } from "./auth";
 
-export const serverRoleEnum = pgEnum("server_role", [
-  "owner",
-  "moderator",
-  "member",
-]);
+export const serverRoleEnum = pgEnum("server_role", ["owner", "moderator", "member"]);
 
 export const server = pgTable("server", {
   id: text("id")

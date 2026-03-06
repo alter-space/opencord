@@ -34,6 +34,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "catalog:",
+    "facehash": "^0.1.0",
     "lucide-react": "^0.473.0",
     "next-themes": "^0.4.6",
     "react": "19.2.3",
@@ -56,6 +57,7 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
     "postcss": "^8.5.3",
+    "react-grab": "^0.1.25",
     "tailwindcss": "^4.0.15",
     "typescript": "catalog:",
     "vite": "^6.2.2"

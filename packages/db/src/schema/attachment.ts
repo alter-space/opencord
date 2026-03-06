@@ -1,10 +1,4 @@
-import {
-  index,
-  integer,
-  pgTable,
-  text,
-  timestamp,
-} from "drizzle-orm/pg-core";
+import { index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { message } from "./message";
 
@@ -23,7 +17,5 @@ export const messageAttachment = pgTable(
     size: integer("size"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
-  (table) => [
-    index("message_attachment_messageId_idx").on(table.messageId),
-  ],
+  (table) => [index("message_attachment_messageId_idx").on(table.messageId)],
 );

@@ -6,15 +6,12 @@ import { channel } from "./channel";
 import { channelReadState } from "./channel-read-state";
 import { conversation, conversationMember } from "./conversation";
 import { friendship } from "./friendship";
+import { messageKeyEnvelope } from "./message-key-envelope";
 import { message } from "./message";
 import { userProfile } from "./profile";
 import { messageReaction } from "./reaction";
-import {
-  server,
-  serverBan,
-  serverMember,
-  serverMute,
-} from "./server";
+import { server, serverBan, serverMember, serverMute } from "./server";
+import { userBlock } from "./user-block";
 import { voiceState } from "./voice-state";
 
 export const userProfileRelations = relations(userProfile, ({ one }) => ({
@@ -37,31 +34,38 @@ export const friendshipRelations = relations(friendship, ({ one }) => ({
   }),
 }));
 
-export const conversationRelations = relations(
-  conversation,
-  ({ one, many }) => ({
-    owner: one(user, {
-      fields: [conversation.ownerId],
-      references: [user.id],
-    }),
-    members: many(conversationMember),
-    messages: many(message),
+export const userBlockRelations = relations(userBlock, ({ one }) => ({
+  blocker: one(user, {
+    fields: [userBlock.blockerId],
+    references: [user.id],
+    relationName: "userBlocker",
   }),
-);
+  blocked: one(user, {
+    fields: [userBlock.blockedId],
+    references: [user.id],
+    relationName: "userBlocked",
+  }),
+}));
 
-export const conversationMemberRelations = relations(
-  conversationMember,
-  ({ one }) => ({
-    conversation: one(conversation, {
-      fields: [conversationMember.conversationId],
-      references: [conversation.id],
-    }),
-    user: one(user, {
-      fields: [conversationMember.userId],
-      references: [user.id],
-    }),
+export const conversationRelations = relations(conversation, ({ one, many }) => ({
+  owner: one(user, {
+    fields: [conversation.ownerId],
+    references: [user.id],
   }),
-);
+  members: many(conversationMember),
+  messages: many(message),
+}));
+
+export const conversationMemberRelations = relations(conversationMember, ({ one }) => ({
+  conversation: one(conversation, {
+    fields: [conversationMember.conversationId],
+    references: [conversation.id],
+  }),
+  user: one(user, {
+    fields: [conversationMember.userId],
+    references: [user.id],
+  }),
+}));
 
 export const serverRelations = relations(server, ({ one, many }) => ({
   owner: one(user, {
@@ -126,19 +130,16 @@ export const channelRelations = relations(channel, ({ one, many }) => ({
   readStates: many(channelReadState),
 }));
 
-export const channelReadStateRelations = relations(
-  channelReadState,
-  ({ one }) => ({
-    channel: one(channel, {
-      fields: [channelReadState.channelId],
-      references: [channel.id],
-    }),
-    user: one(user, {
-      fields: [channelReadState.userId],
-      references: [user.id],
-    }),
+export const channelReadStateRelations = relations(channelReadState, ({ one }) => ({
+  channel: one(channel, {
+    fields: [channelReadState.channelId],
+    references: [channel.id],
   }),
-);
+  user: one(user, {
+    fields: [channelReadState.userId],
+    references: [user.id],
+  }),
+}));
 
 export const messageRelations = relations(message, ({ one, many }) => ({
   sender: one(user, {
@@ -165,32 +166,38 @@ export const messageRelations = relations(message, ({ one, many }) => ({
     relationName: "messagePinnedBy",
   }),
   attachments: many(messageAttachment),
+  keyEnvelopes: many(messageKeyEnvelope),
   reactions: many(messageReaction),
 }));
 
-export const messageAttachmentRelations = relations(
-  messageAttachment,
-  ({ one }) => ({
-    message: one(message, {
-      fields: [messageAttachment.messageId],
-      references: [message.id],
-    }),
+export const messageKeyEnvelopeRelations = relations(messageKeyEnvelope, ({ one }) => ({
+  message: one(message, {
+    fields: [messageKeyEnvelope.messageId],
+    references: [message.id],
   }),
-);
+  user: one(user, {
+    fields: [messageKeyEnvelope.userId],
+    references: [user.id],
+  }),
+}));
 
-export const messageReactionRelations = relations(
-  messageReaction,
-  ({ one }) => ({
-    message: one(message, {
-      fields: [messageReaction.messageId],
-      references: [message.id],
-    }),
-    user: one(user, {
-      fields: [messageReaction.userId],
-      references: [user.id],
-    }),
+export const messageAttachmentRelations = relations(messageAttachment, ({ one }) => ({
+  message: one(message, {
+    fields: [messageAttachment.messageId],
+    references: [message.id],
   }),
-);
+}));
+
+export const messageReactionRelations = relations(messageReaction, ({ one }) => ({
+  message: one(message, {
+    fields: [messageReaction.messageId],
+    references: [message.id],
+  }),
+  user: one(user, {
+    fields: [messageReaction.userId],
+    references: [user.id],
+  }),
+}));
 
 export const voiceStateRelations = relations(voiceState, ({ one }) => ({
   user: one(user, {

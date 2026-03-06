@@ -5,6 +5,7 @@ Hono server running on Node.js, port 3000.
 ## Route Structure
 
 All route mounting happens in `src/index.ts`:
+
 - `/api/auth/*` — Better Auth handler (from `@opencord/auth`)
 - `/trpc/*` — tRPC server (router from `@opencord/api`, context includes session)
 - `/ai` — AI streaming endpoint using Vercel AI SDK + Google Gemini

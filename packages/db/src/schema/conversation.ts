@@ -1,18 +1,8 @@
-import {
-  index,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  unique,
-} from "drizzle-orm/pg-core";
+import { index, pgEnum, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
 
 import { user } from "./auth";
 
-export const conversationTypeEnum = pgEnum("conversation_type", [
-  "dm",
-  "group",
-]);
+export const conversationTypeEnum = pgEnum("conversation_type", ["dm", "group"]);
 
 export const conversation = pgTable(
   "conversation",
@@ -21,18 +11,25 @@ export const conversation = pgTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
     type: conversationTypeEnum("type").notNull(),
+    dmKey: text("dm_key").unique(),
     name: text("name"),
     imageUrl: text("image_url"),
     ownerId: text("owner_id").references(() => user.id, {
       onDelete: "set null",
     }),
+    lastMessageId: text("last_message_id"),
+    lastMessageAt: timestamp("last_message_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
       .$onUpdate(() => new Date())
       .notNull(),
   },
-  (table) => [index("conversation_ownerId_idx").on(table.ownerId)],
+  (table) => [
+    index("conversation_ownerId_idx").on(table.ownerId),
+    index("conversation_dmKey_idx").on(table.dmKey),
+    index("conversation_lastMessageAt_idx").on(table.lastMessageAt),
+  ],
 );
 
 export const conversationMember = pgTable(
@@ -48,13 +45,11 @@ export const conversationMember = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     lastReadAt: timestamp("last_read_at"),
+    lastReadMessageId: text("last_read_message_id"),
     joinedAt: timestamp("joined_at").defaultNow().notNull(),
   },
   (table) => [
-    unique("conversation_member_unique").on(
-      table.conversationId,
-      table.userId,
-    ),
+    unique("conversation_member_unique").on(table.conversationId, table.userId),
     index("conversation_member_conversationId_idx").on(table.conversationId),
     index("conversation_member_userId_idx").on(table.userId),
   ],

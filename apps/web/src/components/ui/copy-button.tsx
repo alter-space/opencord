@@ -4,8 +4,7 @@ import { cn } from "@/lib/utils";
 
 type SizeVariant = "sm" | "default" | "lg";
 
-interface CopyButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface CopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value?: string;
   size?: SizeVariant;
 }
@@ -17,16 +16,7 @@ const sizeMap: Record<SizeVariant, { button: string; icon: number }> = {
 };
 
 const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
-  (
-    {
-      value,
-      size = "default",
-      className,
-      onClick,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ value, size = "default", className, onClick, ...props }, ref) => {
     const [copied, setCopied] = React.useState<boolean>(false);
 
     const handleCopy = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,23 +47,15 @@ const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
         <div
           className={cn(
             "transition-all duration-200",
-            copied
-              ? "scale-100 opacity-100 blur-none"
-              : "scale-70 opacity-0 blur-[2px]",
+            copied ? "scale-100 opacity-100 blur-none" : "scale-70 opacity-0 blur-[2px]",
           )}
         >
-          <CheckIcon
-            size={iconSize}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
+          <CheckIcon size={iconSize} strokeWidth={2} aria-hidden="true" />
         </div>
         <div
           className={cn(
             "absolute transition-all duration-200",
-            copied
-              ? "scale-0 opacity-0 blur-[2px]"
-              : "scale-100 opacity-100 blur-none",
+            copied ? "scale-0 opacity-0 blur-[2px]" : "scale-100 opacity-100 blur-none",
           )}
         >
           <CopyIcon size={iconSize} strokeWidth={2} aria-hidden="true" />
