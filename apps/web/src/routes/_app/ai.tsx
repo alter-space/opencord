@@ -2,7 +2,8 @@ import { useChat } from "@ai-sdk/react";
 import { env } from "@opencord/env/web";
 import { createFileRoute } from "@tanstack/react-router";
 import { DefaultChatTransport } from "ai";
-import { Send } from "lucide-react";
+import { SentIcon } from "@hugeicons/core-free-icons";
+import { Icon } from "@/components/ui/icon";
 import { useRef, useEffect, useState } from "react";
 import { Streamdown } from "streamdown";
 
@@ -85,7 +86,7 @@ function RouteComponent() {
           autoFocus
         />
         <Button type="submit" className="size-9">
-          <Send size={18} />
+          <Icon icon={SentIcon} size={18} />
         </Button>
       </form>
     </div>

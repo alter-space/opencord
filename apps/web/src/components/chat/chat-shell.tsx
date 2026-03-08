@@ -1,7 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { Search, ShieldMinus, UserMinus, UserPlus, Users, MessageCircle } from "lucide-react";
+import {
+  BubbleChatIcon,
+  Search01Icon,
+  ShieldMinusIcon,
+  UserAdd01Icon,
+  UserMinus01Icon,
+  UserMultiple02Icon,
+} from "@hugeicons/core-free-icons";
+import { Icon } from "@/components/ui/icon";
 import { toast } from "sonner";
 import { Facehash } from "facehash";
 
@@ -126,7 +134,7 @@ function FriendActions({
         disabled={disabled}
         onClick={() => onOpenChat(friend.userId)}
       >
-        <MessageCircle className="size-4" />
+        <Icon icon={BubbleChatIcon} className="size-4" />
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger
@@ -137,19 +145,19 @@ function FriendActions({
               />
           }
         >
-          <Users className="size-4" />
+          <Icon icon={UserMultiple02Icon} className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
           className="w-44 rounded-xl border border-border/80 bg-background/95 backdrop-blur"
         >
           <DropdownMenuItem onClick={() => onRemove(friend.userId)}>
-            <UserMinus className="size-4" />
+            <Icon icon={UserMinus01Icon} className="size-4" />
             Remove Friend
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" onClick={() => onBlock(friend.userId)}>
-            <ShieldMinus className="size-4" />
+            <Icon icon={ShieldMinusIcon} className="size-4" />
             Block
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -188,7 +196,7 @@ function FriendListCard({
   if (friends.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center text-sm text-muted-foreground">
-        <Users className="mb-4 size-10 text-muted-foreground/50" />
+        <Icon icon={UserMultiple02Icon} className="mb-4 size-10 text-muted-foreground/50" />
         {emptyMessage}
       </div>
     );
@@ -244,14 +252,14 @@ function FriendListCard({
                     disabled={isBusy}
                     onClick={() => onAccept?.(friend.friendshipId)}
                   >
-                    <UserPlus className="size-4" />
+                    <Icon icon={UserAdd01Icon} className="size-4" />
                   </Button>
                   <Button
                     className="size-9 rounded-full hover:bg-destructive/20 hover:text-destructive"
                     disabled={isBusy}
                     onClick={() => onDecline?.(friend.friendshipId)}
                   >
-                    <UserMinus className="size-4" />
+                    <Icon icon={UserMinus01Icon} className="size-4" />
                   </Button>
                 </>
               ) : null}
@@ -261,7 +269,7 @@ function FriendListCard({
                   disabled={isBusy}
                   onClick={() => onDecline?.(friend.friendshipId)}
                 >
-                  <UserMinus className="size-4" />
+                  <Icon icon={UserMinus01Icon} className="size-4" />
                 </Button>
               ) : null}
             </div>
@@ -290,7 +298,7 @@ function BlockedListCard({
   if (users.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center text-sm text-muted-foreground">
-        <ShieldMinus className="mb-4 size-10 text-muted-foreground/50" />
+        <Icon icon={ShieldMinusIcon} className="mb-4 size-10 text-muted-foreground/50" />
         No blocked users.
       </div>
     );
@@ -398,7 +406,7 @@ function AddFriendResults({
                 disabled={isBusy}
                 onClick={() => onAdd(result.userId)}
               >
-                <UserPlus className="mr-2 size-4" />
+                <Icon icon={UserAdd01Icon} className="mr-2 size-4" />
                 Add Friend
               </Button>
             )}
@@ -749,7 +757,7 @@ export function ChatShell() {
     <div className="flex h-full flex-col overflow-hidden rounded-tl-xl bg-background border border-border shadow-sm">
       <header className="flex h-14 shrink-0 items-center gap-6 border-b border-border px-6">
         <div className="flex items-center gap-2 font-semibold text-foreground">
-          <Users className="size-5 text-muted-foreground" />
+          <Icon icon={UserMultiple02Icon} className="size-5 text-muted-foreground" />
           Friends
         </div>
         <div className="h-6 w-px bg-border" />
@@ -827,7 +835,7 @@ export function ChatShell() {
           ) : (
             <div className="flex h-full flex-col">
               <div className="relative mb-6">
-                <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Icon icon={Search01Icon} className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   value={filterQuery}
                   onChange={(e) => setFilterQuery(e.target.value)}
@@ -947,7 +955,7 @@ export function ChatShell() {
                       dashboard.outgoing.length === 0 &&
                       !dashboardQuery.isLoading && (
                         <div className="flex flex-col items-center justify-center py-20 text-center text-sm text-muted-foreground">
-                          <Users className="mb-4 size-10 text-muted-foreground/50" />
+                          <Icon icon={UserMultiple02Icon} className="mb-4 size-10 text-muted-foreground/50" />
                           There are no pending friend requests.
                         </div>
                       )}

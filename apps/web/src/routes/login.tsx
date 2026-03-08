@@ -59,7 +59,7 @@ function LoginPage() {
   return (
     <div className="fixed inset-0 z-50 flex bg-background">
       <div
-        className="relative hidden overflow-hidden lg:flex lg:w-1/2"
+        className="relative hidden overflow-hidden lg:flex lg:w-1/2 border-r"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -74,12 +74,6 @@ function LoginPage() {
             minPixelRatio={1}
           />
         </Suspense>
-        <div className="absolute inset-0 flex flex-col justify-end p-12 pointer-events-none">
-          <h1 className="text-5xl font-bold tracking-tight text-foreground">opencord</h1>
-          <p className="mt-3 max-w-sm text-lg text-muted-foreground">
-            Connect. Communicate. Collaborate.
-          </p>
-        </div>
       </div>
 
       <div className="flex w-full flex-col items-center justify-center p-8 lg:w-1/2">
@@ -89,7 +83,9 @@ function LoginPage() {
           </div>
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">Welcome</h1>
-            <p className="text-muted-foreground">Sign in to continue to Opencord</p>
+            <p className="text-muted-foreground">
+              Sign in to continue to Opencord
+            </p>
           </div>
 
           <Button

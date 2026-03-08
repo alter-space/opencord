@@ -1,5 +1,6 @@
 import * as React from "react";
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { Copy01Icon, Tick01Icon } from "@hugeicons/core-free-icons";
+import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
 type SizeVariant = "sm" | "default" | "lg";
@@ -50,7 +51,7 @@ const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
             copied ? "scale-100 opacity-100 blur-none" : "scale-70 opacity-0 blur-[2px]",
           )}
         >
-          <CheckIcon size={iconSize} strokeWidth={2} aria-hidden="true" />
+          <Icon icon={Tick01Icon} size={iconSize} strokeWidth={2} aria-hidden="true" />
         </div>
         <div
           className={cn(
@@ -58,7 +59,7 @@ const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
             copied ? "scale-0 opacity-0 blur-[2px]" : "scale-100 opacity-100 blur-none",
           )}
         >
-          <CopyIcon size={iconSize} strokeWidth={2} aria-hidden="true" />
+          <Icon icon={Copy01Icon} size={iconSize} strokeWidth={2} aria-hidden="true" />
         </div>
       </button>
     );

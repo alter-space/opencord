@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { Globe2, Hash, LogOut, Volume2 } from "lucide-react";
+import { Globe02Icon, HashtagIcon, Logout01Icon, VolumeHighIcon } from "@hugeicons/core-free-icons";
+import { Icon } from "@/components/ui/icon";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { Facehash } from "facehash";
@@ -60,7 +61,7 @@ function HomePanel() {
               : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
           )}
         >
-          <Globe2 className="size-4" />
+          <Icon icon={Globe02Icon} className="size-4" />
           <span>Friends</span>
         </Link>
 
@@ -134,7 +135,7 @@ function ServerPanel({ serverId }: { serverId: string }) {
                   type="button"
                   className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  <Hash className="size-4 shrink-0" />
+                  <Icon icon={HashtagIcon} className="size-4 shrink-0" />
                   <span className="truncate">{channel.name}</span>
                 </button>
               ))}
@@ -152,7 +153,7 @@ function ServerPanel({ serverId }: { serverId: string }) {
                   type="button"
                   className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  <Volume2 className="size-4 shrink-0" />
+                  <Icon icon={VolumeHighIcon} className="size-4 shrink-0" />
                   <span className="truncate">{channel.name}</span>
                 </button>
               ))}
@@ -193,7 +194,7 @@ export function AppSidebar() {
                 railCls(currentArea === "home"),
               )}
             >
-              <Globe2 className="size-5" />
+              <Icon icon={Globe02Icon} className="size-5" />
             </Link>
 
             <div className="my-1 h-px w-7 bg-border" />
@@ -234,7 +235,7 @@ export function AppSidebar() {
                     });
                   }}
                 >
-                  <LogOut className="mr-2 size-4" />
+                  <Icon icon={Logout01Icon} className="mr-2 size-4" />
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
